@@ -5,18 +5,19 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 
 import { AuthContext } from "../context/AuthContext";
 export default function CheckInOutButton() {
-  const BASE_URL = "http://192.168.1.215:5000";
-  const { userInfo, setUserInfo, userToken } = useContext(AuthContext);
-  const [loggedInUserInfo, setloggedInUserInfo] = useState();
+  const BASE_URL = "http://192.168.1.15:5000";
+  const { userInfo, setUserInfo, userToken, setUserClocking } =
+    useContext(AuthContext);
   const [loading, setLoading] = useState(false);
-  let userId = userInfo.employee;
-
   const fetchData = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/api/employee/${userToken}`);
-      setloggedInUserInfo(res.data);
+      const res = await axios.get(`${BASE_URL}/api/employee`, {
+        headers: {
+          token: userToken,
+        },
+      });
+
       setUserInfo(res.data);
-      console.log(res.data.status);
     } catch (error) {
       console.log(error);
     }
@@ -31,18 +32,29 @@ export default function CheckInOutButton() {
   };
 
   const checkinout = async () => {
-    console.log(`user info`, loggedInUserInfo);
-    if (!status(loggedInUserInfo.status)) {
+    if (!status(userInfo.status)) {
       console.log("about to check in");
       setLoading(true);
       try {
-        const response = await axios.post(
-          `${BASE_URL}/api/employee/${userToken}`
+        const {
+          status,
+          data: { user, pointage },
+        } = await axios.post(
+          `${BASE_URL}/api/employee`,
+          {},
+          {
+            headers: {
+              token: userToken,
+            },
+          }
         );
-        fetchData();
-        console.log(response.data.message);
+        if (status === 200) {
+          setUserInfo(user);
+          setUserClocking((oldValue) => [...oldValue, pointage]);
+        }
       } catch (error) {
-        console.log(error);
+        console.log(error.message);
+        console.log(error.stack);
       }
       setLoading(false);
     }

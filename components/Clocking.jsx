@@ -4,17 +4,20 @@ import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 
 export default function Clocking() {
-  const BASE_URL = "http://192.168.1.215:5000";
+  const BASE_URL = "http://192.168.1.15:5000";
   const [loading, setLoading] = useState(false);
 
   const { userClocking, setUserClocking, userToken } = useContext(AuthContext);
   const fetchData = async () => {
     try {
-      const res = await axios.get(
-        `${BASE_URL}/api/employee/clocking/${userToken}`
-      );
+      const res = await axios.get(`${BASE_URL}/api/employee/clocking`, {
+        headers: {
+          token: userToken,
+        },
+      });
       setUserClocking(res.data);
     } catch (error) {
+      console.log(error);
       console.log("ggg");
     }
   };

@@ -1,13 +1,16 @@
 import React from "react";
 
 import AuthProvider from "./context/AuthContext";
+import SocketProvider from "./context/socketProvider";
 
 import AppNav from "./navigation/AppNav";
 
 export default function App() {
   return (
     <AuthProvider>
-      <AppNav />
+      <SocketProvider>
+        <AppNav />
+      </SocketProvider>
     </AuthProvider>
   );
 }

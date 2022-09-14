@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://192.168.1.215:5000";
+const BASE_URL = "http://192.168.1.15:5000";
 
 const fetchData = async () => {
   try {

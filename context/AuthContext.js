@@ -1,10 +1,19 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
-export const AuthContext = createContext();
+export const AuthContext = createContext({
+  login: () => {},
+  logout: () => {},
+  isLoading: {},
+  userToken: {},
+  userInfo: {},
+  setUserInfo: () => {},
+  userClocking: [],
+  setUserClocking: () => {},
+});
 
 export default AuthProvider = ({ children }) => {
-  const BASE_URL = "http://192.168.1.215:5000";
+  const BASE_URL = "http://192.168.1.15:5000";
   const [isLoading, setisloading] = useState(false);
   const [userToken, setUserToken] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
