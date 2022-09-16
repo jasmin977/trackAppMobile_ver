@@ -5,7 +5,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 
 import { AuthContext } from "../context/AuthContext";
 export default function CheckInOutButton() {
-  const BASE_URL = "http://192.168.1.15:5000";
+  const BASE_URL = "http://192.168.0.133:5000";
   const { userInfo, setUserInfo, userToken, setUserClocking } =
     useContext(AuthContext);
   const [loading, setLoading] = useState(false);

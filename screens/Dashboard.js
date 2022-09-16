@@ -6,9 +6,52 @@ import { SafeAreaView, Text, View, StatusBar } from "react-native";
 import { Clocking, ProfilePic, Today } from "../components";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
+import * as BackgroundFetch from "expo-background-fetch";
+import * as TaskManager from "expo-task-manager";
+import { SocketContext } from "../context/socketProvider";
+
+let setStateFn = () => {
+  console.log("State not yet initialized");
+};
+let socket = null;
+function myTask() {
+  try {
+    // fetch data here...
+    const backendData = "Simulated fetch " + Math.random();
+    console.log("myTask() ", backendData);
+    setStateFn(backendData);
+    // setInterval(() => console.log("i'm cool still working 💪"), 1000);
+
+    return backendData
+      ? BackgroundFetch.BackgroundFetchResult.NewData
+      : BackgroundFetch.BackgroundFetchResult.NoData;
+  } catch (err) {
+    console.log(err);
+    return BackgroundFetch.BackgroundFetchResult.Failed;
+  }
+}
+async function initBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
+  try {
+    if (!TaskManager.isTaskDefined(taskName)) {
+      TaskManager.defineTask(taskName, taskFn);
+    }
+    const options = {
+      minimumInterval: interval, // in seconds
+      stopOnTerminate: false, // android only,
+      startOnBoot: true, // android only
+    };
+    await BackgroundFetch.registerTaskAsync(taskName, options);
+  } catch (err) {
+    console.log("registerTaskAsync() failed:", err);
+  }
+}
+
+initBackgroundFetch("myTaskName", myTask, 1);
+
 export default function Dashboard({ navigation }) {
   const { logout, userInfo } = useContext(AuthContext);
   // console.log(userInfo);
+  socket = useContext(SocketContext).socket;
   return (
     <SafeAreaView
       style={{

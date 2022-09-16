@@ -13,7 +13,7 @@ export const AuthContext = createContext({
 });
 
 export default AuthProvider = ({ children }) => {
-  const BASE_URL = "http://192.168.1.15:5000";
+  const BASE_URL = "http://192.168.0.133:5000";
   const [isLoading, setisloading] = useState(false);
   const [userToken, setUserToken] = useState(null);
   const [userInfo, setUserInfo] = useState(null);

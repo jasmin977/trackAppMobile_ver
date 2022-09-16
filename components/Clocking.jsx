@@ -4,7 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 
 export default function Clocking() {
-  const BASE_URL = "http://192.168.1.15:5000";
+  const BASE_URL = "http://192.168.0.133:5000";
   const [loading, setLoading] = useState(false);
 
   const { userClocking, setUserClocking, userToken } = useContext(AuthContext);

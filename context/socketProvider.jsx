@@ -6,7 +6,7 @@ export const SocketContext = React.createContext({
   socket: {},
 });
 
-const ENDPOINT = "http://192.168.1.15:5000";
+const ENDPOINT = "http://192.168.0.133:5000";
 
 export default function SocketProvider({ children }) {
   const { userToken, setUserInfo, setUserClocking } = useContext(AuthContext);

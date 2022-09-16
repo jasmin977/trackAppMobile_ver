@@ -13,7 +13,6 @@ import { useRef } from "react";
 import "react-native-gesture-handler";
 import CheckInOutButton from "../components/CheckButton";
 const Tab = createBottomTabNavigator();
-
 export const BottomTabs = () => {
   function getWidth() {
     let width = Dimensions.get("window").width;
